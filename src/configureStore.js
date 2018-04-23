@@ -3,6 +3,9 @@
 import { Platform } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
+
 import reducer from './reducers';
 import * as actionCreators from './actions/counter';
 
@@ -18,15 +21,23 @@ if (__DEV__) {
   });
   /* eslint-enable no-underscore-dangle */
 }
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['counter']
+}
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
+const persistedReducer = persistReducer(persistConfig, reducer)
+
 export default function configureStore(initialState) {
-  const store = createStore(reducer, initialState, enhancer);
+  const store = createStore(persistedReducer, initialState, enhancer);
   if (module.hot) {
     module.hot.accept(() => {
       store.replaceReducer(require('./reducers').default);
     });
   }
-  return store;
+  let persistor = persistStore(store)
+  return { store, persistor };
 }

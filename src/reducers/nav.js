@@ -5,5 +5,10 @@ const initialState = {
   routes: [{ key: 'Init', routeName: 'Home' }],
 };
 
-export default (state = initialState, action) =>
-  AppNavigator.router.getStateForAction(action, state);
+export default (state = initialState, action) => {
+  const getStateForAction = AppNavigator.router.getStateForAction(action, state);
+  const routes = getStateForAction.routes
+  const index = getStateForAction.index
+  const routeName = routes[index].routeName
+  return getStateForAction
+}

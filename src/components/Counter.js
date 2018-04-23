@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
 
 export default class Counter extends Component {
   static propTypes = {
-    incrementAmount: PropTypes.func,
+    incrementAmount: PropTypes.func.isRequired,
     incrementIfOdd: PropTypes.func,
-    incrementAsync: PropTypes.func,
-    decrementAmount: PropTypes.func,
+    incrementAsync: PropTypes.func.isRequired,
+    decrementAmount: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -29,7 +29,6 @@ export default class Counter extends Component {
     const {
       incrementAmount, incrementIfOdd, decrementAmount, counter
     } = this.props;
-    console.log("counter :::::  ", counter['counter'])
     return (
       <View>
         <Text style={styles.text}>Clicked:  { counter['counter'] } times</Text>

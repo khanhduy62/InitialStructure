@@ -6,13 +6,14 @@ const { increment, decrement } = createActions({
 });
 
 export function incrementAmount() {
-  return (dispatch, getState) => {
+  return (dispatch, store) => {
     dispatch(increment());
   };
 }
 
 export function decrementAmount() {
-  return (dispatch, getState) => {
+  return (dispatch, store) => {
+    console.log("store ::::: ", store)
     dispatch(decrement());
   };
 }
